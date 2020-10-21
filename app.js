@@ -12,7 +12,10 @@ const postsRoute = require('./Routes/Posts');
 app.use(express.json());
 app.use(postsRoute);
 
-
+route.use('/*', (req,res) =>{
+    
+    return res.status(404).json({message:'route not found'});
+});
 
 //Connect to DB
 mongoose.connect(
