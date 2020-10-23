@@ -5,12 +5,15 @@ const mongoose = require('mongoose');
 require ('dotenv/config');
 const cors = require ('cors');
 const postsRoute = require('./Routes/Posts');
+const commentsRoute = require('./Routes/comments');
+const signin = require('./Routes/signin');
 
-
+require('./seeds/user')
 
 //middlewares
 app.use(express.json());
-app.use(postsRoute);
+app.use('/api/posts',postsRoute);
+app.use('/api/signin', signin);
 
 app.use('/*', (req,res) =>{
     

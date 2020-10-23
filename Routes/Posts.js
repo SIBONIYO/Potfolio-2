@@ -1,9 +1,10 @@
 const express = require("express");
-const router = express.Router();
+const router = require('express').Router();
 const postModel = require("../models/postModel");
+const verify = require('./verifyToken')
 
 //GET BACK ALL THE POST
-router.get("/posts", async (req, res) => {
+router.get("/",  async (req, res) => {
   console.log("posts");
   try {
     const posts = await postModel.find();
@@ -15,17 +16,20 @@ router.get("/posts", async (req, res) => {
 });
 
 //GET BACK A POST BY ID
-router.get("/posts/:postId", async (req, res) => {
+router.get("/:postId", async (req, res) => { 
   try {
-    const posts = await postModel.findById(req.params.postId);
-    return res.status(200).json({ message: posts });
+    const post = await postModel.findById(req.params.postId);
+    if (!post) {
+      return res.status(404).json({ error: "post not found" });
+    }
+    return res.status(200).json({ message: post });
   } catch (err) {
     console.log(err);
     return res.json({ message: "err" });
   }
 });
 //SUBMIT A POST
-router.post("/posts", async (req, res) => {
+router.post("/", verify, async (req, res) => {
   const post = new postModel({
     title: req.body.title,
     description: req.body.description,
@@ -34,12 +38,16 @@ router.post("/posts", async (req, res) => {
     const savedPost = await post.save();
     return res.status(201).json({ savedPost });
   } catch (err) {
-    return res.status(500).json({ message: err });
+    return res.status(500).json({ message: 'err' });
   }
 });
 
 //DELETE A POST
-router.delete("/posts/:postId", async (req, res) => {
+router.delete("/:postId", verify, async (req, res) => {
+  const post = await postModel.findById(req.params.postId);
+  if (!post) {
+    return res.status(404).json({ error: "post not found" });
+  }
   try {
     const removedPost = await postModel.deleteOne({ _id: req.params.postId });
     return res.status(201).json({ removedPost });
@@ -50,13 +58,13 @@ router.delete("/posts/:postId", async (req, res) => {
 
 // UPDATE A POST
 
-router.patch("/posts/:postId", async (req, res) => {
+router.patch("/:postId", verify, async (req, res) => {
   const post = await postModel.findById(req.params.postId);
   if (!post) {
     return res.status(404).json({ error: "post not found" });
   }
-  post.title = req.body.title;
-  post.description = req.body.description;
+  post.title = req.body.title || post.title;
+  post.description = req.body.description || post.description;
 
   try {
     const savedPost = await post.save();
