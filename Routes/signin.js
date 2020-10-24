@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
     return res.status(400).json({message: 'wrong password'});
   }
 
-  const token = await jwt.sign(user.email, process.env.TOKEN_SECRET)
+  const token = await jwt.sign(user.email, process.env.TOKEN_SECRET);
     return res.status(200).json({message: 'success', token});
 
 });
