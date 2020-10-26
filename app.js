@@ -7,12 +7,14 @@ const cors = require ('cors');
 const postsRoute = require('./Routes/Posts');
 const commentsRoute = require('./Routes/comments');
 const signin = require('./Routes/signin');
+const postComment = require('./models/postComment');
 
 require('./seeds/user')
 
 //middlewares
 app.use(express.json());
 app.use('/api/posts',postsRoute);
+app.use('/api/comments', postComment);
 app.use('/api/signin', signin);
 
 app.use('/*', (req,res) =>{

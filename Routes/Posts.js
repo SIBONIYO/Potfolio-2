@@ -36,7 +36,7 @@ router.post("/", verify, async (req, res) => {
   });
   try {
     const savedPost = await post.save();
-    return res.status(201).json({ savedPost });
+    return res.status(201).json(savedPost);
   } catch (err) {
     return res.status(500).json({ message: 'err' });
   }
@@ -50,9 +50,9 @@ router.delete("/:postId", verify, async (req, res) => {
   }
   try {
     const removedPost = await postModel.deleteOne({ _id: req.params.postId });
-    return res.status(201).json({ removedPost });
+    return res.status(201).json({ message: "Post was deleted!" });
   } catch (err) {
-    return res.status(500).json({ message: err });
+    return res.status(500).json({ message: "please review the post id" });
   }
 });
 
@@ -68,9 +68,9 @@ router.patch("/:postId", verify, async (req, res) => {
 
   try {
     const savedPost = await post.save();
-    return res.status(201).json({ savedPost });
+    return res.status(201).json(savedPost);
   } catch (err) {
-    return res.status(500).json({ message: err });
+    return res.status(500).json({ message: "Updated post not found" });
   }
 });
 
