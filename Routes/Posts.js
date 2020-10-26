@@ -38,7 +38,7 @@ router.post("/", verify, async (req, res) => {
     const savedPost = await post.save();
     return res.status(201).json(savedPost);
   } catch (err) {
-    return res.status(500).json({ message: 'err' });
+    return res.status(500).json({ message: 'post not submitted!' });
   }
 });
 
