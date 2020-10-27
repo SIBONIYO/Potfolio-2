@@ -2,12 +2,12 @@ const { request } = require('express');
 const { string } = require('joi');
 const mongoose = require ('mongoose');
 
-const PostCommentSchema = mongoose.Schema({
+const getquerySchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
     },
-    commentbody: {
+    description: {
         type: String,
         required: true,
     },
@@ -18,4 +18,4 @@ const PostCommentSchema = mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('postComment', PostCommentSchema);
+module.exports = mongoose.model('Getqueries', getquerySchema);

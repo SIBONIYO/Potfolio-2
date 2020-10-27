@@ -4,7 +4,7 @@ const User = require("../models/user");
 require ('dotenv').config()
 const jwt = require('jsonwebtoken')
 
-//SUBMIT A POST
+//Signin
 router.post("/", async (req, res) => {
   const user = await User.findOne({email: req.body.email})
   if(!user){
