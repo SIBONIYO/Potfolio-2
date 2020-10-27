@@ -1,4 +1,5 @@
 const express = require("express");
+const postComment = require("../models/postComment");
 const router = require('express').Router();
 const postModel = require("../models/postModel");
 const verify = require('./verifyToken')
@@ -22,12 +23,14 @@ router.get("/:postId", async (req, res) => {
     if (!post) {
       return res.status(404).json({ error: "post not found" });
     }
-    return res.status(200).json({ message: post });
+    const comments = await postComment.find({postId: req.params.postId})
+    return res.status(200).json({ message: "post is successfull", post, comments });
   } catch (err) {
     console.log(err);
     return res.json({ message: "err" });
   }
 });
+
 //SUBMIT A POST
 router.post("/", verify, async (req, res) => {
   const post = new postModel({
@@ -40,6 +43,24 @@ router.post("/", verify, async (req, res) => {
   } catch (err) {
     return res.status(500).json({ message: 'post not submitted!' });
   }
+});
+
+// Post and comments
+
+router.post('/:postId/comments', async (req,res) =>{
+  console.log(req.params.postId);
+  const comment = new postComment({ 
+      name: req.body.name,
+      commentbody:req.body.commentbody,
+      postId: req.params.postId,
+  });
+  try{
+      const savedComment = await comment.save();
+      return res.status(201).json({savedComment});
+  }catch (err) {
+      console.log(err);
+      return res.status(500).json({message:'An error found while trying to save your comment!'});
+  };
 });
 
 //DELETE A POST

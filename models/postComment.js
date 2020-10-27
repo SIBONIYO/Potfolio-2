@@ -7,6 +7,10 @@ const PostCommentSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    postId: {
+        type: String,
+        required: true,
+    },
     commentbody: {
         type: String,
         required: true,

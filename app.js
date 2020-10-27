@@ -14,7 +14,6 @@ require('./seeds/user')
 //middlewares
 app.use(express.json());
 app.use('/api/posts',postsRoute);
-app.use('/api/posts/:postId/comments', commentsRoute);
 app.use('/api/Queries', queries);
 app.use('/api/signin', signin);
 
