@@ -1,6 +1,7 @@
 
 //validation
 const Joi = require('joi');
+const { join } = require('lodash');
 
 //Register validation
 const registerValidation = data =>{
@@ -29,7 +30,16 @@ const signinValidation = data =>{
             .min(6)
             .required()
     }
-}
+};
+
+const postSchema ={
+    name: Joi.string()
+        .min(3)
+        .reauired(),
+    completed: Joi.boolean()
+};
+
 
 module.exports.registerValidation = registerValidation;
 module.exports.signinValidation = signinValidation;
+module.exports.postValidation = (post) =>Joi.validate(post, postSchema);

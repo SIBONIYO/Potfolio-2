@@ -2,7 +2,27 @@ const express = require("express");
 const postComment = require("../models/postComment");
 const router = require('express').Router();
 const postModel = require("../models/postModel");
-const verify = require('./verifyToken')
+const verify = require('./verifyToken');
+
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUI = require('swagger-ui-express');
+
+// SWAGGER
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      title: 'Customer API',
+      description: 'Customer API Information',
+      contact: {
+        name: 'Sibo my brand'
+      },
+      //servers: {'https://localhost:3000' }
+    },
+  },
+  //Finding APIs
+  //apis: {'../app.js', }
+};
+
 
 //GET BACK ALL THE POST
 router.get("/",  async (req, res) => {
@@ -17,7 +37,7 @@ router.get("/",  async (req, res) => {
 });
 
 //GET BACK A POST BY ID
-router.get("/:postId", async (req, res) => { 
+router.get('/:postId', async (req, res) => { 
   try {
     const post = await postModel.findById(req.params.postId);
     if (!post) {
@@ -30,7 +50,6 @@ router.get("/:postId", async (req, res) => {
     return res.json({ message: "err" });
   }
 });
-
 //SUBMIT A POST
 router.post("/", verify, async (req, res) => {
   const post = new postModel({

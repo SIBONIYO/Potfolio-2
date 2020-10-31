@@ -1,4 +1,4 @@
-//Imorting the package
+//Importing the package
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
@@ -9,6 +9,13 @@ const commentsRoute = require('./Routes/comments');
 const signin = require('./Routes/signin');
 const queries = require('./Routes/Queries');
 
+
+//const cors = require('cors');
+//const swaggerJsDoc = require('swagger-jsdoc');
+//const swaggerOptions = require('swaggerJsDoc');
+//const swaggerDocs = swaggerJsDoc('swaggerOptions');
+
+
 require('./seeds/user')
 
 //middlewares
@@ -16,6 +23,9 @@ app.use(express.json());
 app.use('/api/posts',postsRoute);
 app.use('/api/Queries', queries);
 app.use('/api/signin', signin);
+app.use(cors());
+//app.use('/api-docs', swaggerUi.setup(swaggerDocs));
+
 
 app.use('/*', (req,res) =>{
     
