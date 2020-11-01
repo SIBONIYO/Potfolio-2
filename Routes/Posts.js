@@ -3,6 +3,7 @@ const postComment = require("../models/postComment");
 const router = require('express').Router();
 const postModel = require("../models/postModel");
 const verify = require('./verifyToken');
+const validation = require('./validation');
 
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
@@ -23,6 +24,24 @@ const swaggerOptions = {
   //apis: {'../app.js', }
 };
 
+// TESTING MY API
+const posts = [
+  {
+    id: 1,
+    name: "task name 1",
+    completed: false
+  },
+  {
+    id: 2,
+    name: "task name 2",
+    completed: false
+  },
+  {
+    id: 3,
+    name: "task name 3",
+    completed: false
+  },
+];
 
 //GET BACK ALL THE POST
 router.get("/",  async (req, res) => {

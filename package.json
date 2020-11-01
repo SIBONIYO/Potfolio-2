@@ -6,7 +6,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js", "test": "mocha test/task.js"
   },
   "author": "",
   "license": "ISC",
@@ -29,7 +29,6 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "chai-http": "^4.3.0",
     "mocha": "^8.2.0"
   },
   "description": ""

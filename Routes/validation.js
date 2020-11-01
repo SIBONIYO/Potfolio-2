@@ -35,7 +35,7 @@ const signinValidation = data =>{
 const postSchema ={
     name: Joi.string()
         .min(3)
-        .reauired(),
+        .required(),
     completed: Joi.boolean()
 };
 
