@@ -7,6 +7,7 @@ const validation = require('./validation');
 
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
+const { deleteOne } = require("../models/postComment");
 
 // SWAGGER
 const swaggerOptions = {
@@ -24,24 +25,6 @@ const swaggerOptions = {
   //apis: {'../app.js', }
 };
 
-// TESTING MY API
-const posts = [
-  {
-    id: 1,
-    name: "task name 1",
-    completed: false
-  },
-  {
-    id: 2,
-    name: "task name 2",
-    completed: false
-  },
-  {
-    id: 3,
-    name: "task name 3",
-    completed: false
-  },
-];
 
 //GET BACK ALL THE POST
 router.get("/",  async (req, res) => {
@@ -51,8 +34,8 @@ router.get("/",  async (req, res) => {
     return res.status(200).json({ message: posts });
   } catch (err) {
     console.log(err);
-    return res.json({ message: "err" });
-  }
+    return res.status(404).json({ message: "Error found while trying to get posts" });
+  };
 });
 
 //GET BACK A POST BY ID
@@ -60,7 +43,7 @@ router.get('/:postId', async (req, res) => {
   try {
     const post = await postModel.findById(req.params.postId);
     if (!post) {
-      return res.status(404).json({ error: "post not found" });
+      return res.status(404).json({error: "post with a provided Id not found" });
     }
     const comments = await postComment.find({postId: req.params.postId})
     return res.status(200).json({ message: "post is successfull", post, comments });

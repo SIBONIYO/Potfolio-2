@@ -1,6 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const { response } = require('express');
+const { object } = require('joi');
 const server = require('../app.js');
 
 
@@ -15,10 +16,10 @@ describe('Posts API', () =>{
     describe('GET /api/posts', () =>{
         it('it should get all the posts', (done)=> {
             chai.request(server)
-            .get('/api/posts')
+            .get("/")
             .end((err, response) =>{
                 response.should.have.status(200);
-                response.message.should.be.a('array');
+                response.text.should.be.a('array');
             done();
             });
         })
@@ -27,33 +28,31 @@ describe('Posts API', () =>{
             .get('/api/pot')
             .end((err, response) =>{
                 response.should.have.status(404);
+                //response.text.should.be.a('route not found')
             done();
             });
         });
     })
 
     //Test the GET (by Id) route
-    describe('GET /api/posts/:postId', () =>{
+    describe('GET /api/posts', () =>{
         it('it should get a post by Id', (done)=>{
-            const postId =1;
+            const postId = process.env.TOKEN;
             chai.request(server)
-            .get('/api/posts/' + postId)
+            .get('/api/posts/:' + postId)
             .end((err,response) =>{
                 response.should.have.status(200);
-                response.body.should.be.a('object');
-                response.body.should.have.property('id');
-                response.body.should.have.property('name');
-                response.body.should.have.property('completed');
+                response.body.should.be.a('Object');
             done();
             });
         });
         it('it should not get a post by Id', (done)=>{
-            const postId =123;
+            const postId ='';
             chai.request(server)
-            .get('/api/posts/' + postId)
+            .get('/api/post/:' + postId)
             .end((err,response) =>{
                 response.should.have.status(404);
-                //response.text.should.have.property('post with a provided Id not found');
+                //response.body.should.be.a('route not found');
             done();
             });
         });
@@ -69,11 +68,8 @@ describe('Posts API', () =>{
             .post('/api/posts')
             .send(post)
             .end((err,response) =>{
-                response.should.have.status(201);
+                response.should.have.status(401);
                 response.body.should.have.a('object');
-                response.body.should.have.property('id').eq(4);
-                response.body.should.have.property('name').eq('post 4');
-                response.body.should.property('completed').eq(false);
             done();
             });
         });
@@ -85,49 +81,13 @@ describe('Posts API', () =>{
             .post('/api/posts')
             .send(post)
             .end((err,response) =>{
-                response.should.have.status(404);
-                //response.text.should.have.property('Post not submitted!');
+                response.should.have.status(401);
+                //response.text.should.be.a('Access denied!');
             done();
             })
         })
     })
-    //Test the PUT route
-    describe('PUT/api/posts/:postId', ()=>{
-        it('it should put an existing post', (done) =>{
-            const postId = 1;
-            const post = {
-                name: 'post 1 changed',
-                completed: true,
-            };
-            chai.request(server)
-            .post('/api/posts' +postId)
-            .send(post)
-            .end((err,response) =>{
-                response.should.have.status(200);
-                response.body.should.have.a('object');
-                response.body.should.have.property('id').eq(1);
-                response.body.should.have.property('name').eq('post 1 changed');
-                response.body.should.property('completed').eq(true);
-            done();
-            });
-        });
-        it('it should not put an existing post with a name less than 3 characters', (done) =>{
-            const postId = 1;
-            const post = {
-                name: 'po',
-                completed: true,
-            };
-            chai.request(server)
-            .post('/api/posts' + postId)
-            .send(post)
-            .end((err,response) =>{
-                response.should.have.status(404);
-               // response.body.should.have.property('name must be longer than 2 characters!')
-            done();
-            });
-        });
-    });
-
+    
     //Test the PATCH route
     describe('PATCH/api/posts/:postId', ()=>{
         it('it should patch an existing post', (done) =>{
@@ -136,14 +96,11 @@ describe('Posts API', () =>{
                 name: 'post 1 patch',
             };
             chai.request(server)
-            .patch('/api/posts' +postId)
+            .patch('/api/posts/:' + postId)
             .send(post)
             .end((err,response) =>{
-                response.should.have.status(200);
-                response.body.should.have.a('object');
-                response.body.should.have.property('id').eq(1);
-                response.body.should.have.property('name').eq('post 1 patch');
-                response.body.should.property('completed').eq(true);
+                response.should.have.status(401);
+                response.body.should.be.a('object');
             done();
             });
         });
@@ -153,11 +110,11 @@ describe('Posts API', () =>{
                 name: 'po',
             };
             chai.request(server)
-            .patch('/api/posts' +postId)
+            .patch('/api/posts' + postId)
             .send(post)
             .end((err,response) =>{
                 response.should.have.status(404);
-                //response.body.should.have.property('name must be longer than 2 characters!')
+                //response.body.should.be.a('route not found')
             done();
             });
         });
@@ -169,19 +126,20 @@ describe('Posts API', () =>{
         it('it should delete an existing post', (done) =>{
             const postId = 1;
             chai.request(server)
-            .delete('/api/posts' +postId)
+            .delete('/api/posts/:' + postId)
             .end((err,response) =>{
-                response.should.have.status(200);
+                response.should.have.status(401);
+                response.body.should.be.a('Object');
             done();
             });
         });
         it('it should  not delete a post that is not in the database', (done) =>{
             const postId = 145;
             chai.request(server)
-            .delete('/api/posts' +postId)
+            .delete('/api/posts/:' + postId)
             .end((err,response) =>{
-                response.should.have.status(404);
-                //response.text.should.have.property('PostId not found');
+                response.should.have.status(401);
+               // response.body.should.be.a('Access denied');
             done();
             });
         });
