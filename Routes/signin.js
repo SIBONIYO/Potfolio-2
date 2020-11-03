@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken')
 //Signin
 router.post("/", async (req, res) => {
   const user = await User.findOne({email: req.body.email})
+  
   if(!user){
     return res.status(400).json({message: 'user not found'});
   }

@@ -15,7 +15,7 @@ let token = process.env.TOKEN;
 describe( 'POST/api/comment', ()=>{
     it('it should post a new comment', (done)=>{
         const comment ={
-            title: 'comment 1',
+            name: 'comment 1',
             commentbody: 'wwe yeeeeeeeeeeeeeeeeee',
             completed: false,
         };
