@@ -4,22 +4,23 @@ const { response } = require('express');
 const { object } = require('joi');
 const server = require('../app.js');
 
-
 // Assertion Style
 chai.should();
 
 chai.use(chaiHttp);
 
-describe('Posts API', () =>{
+let token = process.env.TOKEN;
 
-    // Test the GET route
+describe('Posts API', () =>{
+    //Testing Get route
     describe('GET /api/posts', () =>{
         it('it should get all the posts', (done)=> {
             chai.request(server)
-            .get("/")
+            .get("/api/posts")
             .end((err, response) =>{
+                console.log(response);
                 response.should.have.status(200);
-                response.text.should.be.a('array');
+                response.body.message.should.be.a('array');
             done();
             });
         })
@@ -61,15 +62,17 @@ describe('Posts API', () =>{
     describe('POST/api/posts', ()=>{
         it('it should post a new post', (done) =>{
             const post = {
-                name: 'post 4',
+                title: 'post 4',
+                description: 'we got you',
                 completed: false,
             };
             chai.request(server)
             .post('/api/posts')
+            .set(token)
             .send(post)
             .end((err,response) =>{
-                response.should.have.status(401);
-                response.body.should.have.a('object');
+                response.should.have.status(200);
+                //response.text.should.be.a('Access denied');
             done();
             });
         });
@@ -79,10 +82,11 @@ describe('Posts API', () =>{
             };
             chai.request(server)
             .post('/api/posts')
+            .set(token)
             .send(post)
             .end((err,response) =>{
-                response.should.have.status(401);
-                //response.text.should.be.a('Access denied!');
+                response.should.have.status(404);
+                response.text.should.be.a('Error found when trying to post');
             done();
             })
         })

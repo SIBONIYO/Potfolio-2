@@ -18,7 +18,7 @@ router.post('/', async (req,res) =>{
         return res.status(201).json({savedComment});
     }catch (err) {
         console.log(err);
-        return res.status(500).json({message:'An error found while trying to save your comment!'});
+        return res.status(404).json({message:'An error found while trying to save your comment!'});
     };
 });
 

@@ -17,7 +17,7 @@ router.post('/', verify, async(req,res) =>{
         return res.status(201).json({message:'Query saved successfully'});
     }catch (err) {
         console.log(err);
-        return res.status(500).json({message:'An error found while saving your query!'});
+        return res.status(404).json({message:'An error found while saving your query!'});
     };
 });
 
