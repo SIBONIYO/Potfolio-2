@@ -9,20 +9,38 @@ chai.should();
 
 chai.use(chaiHttp);
 
-
+let token;
+// Getting Token first
+describe('signin', () => {
+    it('it should be able to signin', (done) =>{
+        const user ={
+            email: process.env.email,
+            password: process.env.PASSWORD
+        }
+        chai.request(server)
+        .post('/api/signin')
+        .send(user)
+        .end((err,response) =>{
+            token = response.body.token
+            response.should.have.status(200);
+           // response.body.should.have.property('array');
+        done();
+    });
+});
 //Testing Queries endpoints
 describe('POST/api/Queries', ()=>{
     it('it should post a new query', (done) =>{
         const Query = {
             name: 'new query',
             description: 'new desc',
-            completed: false,
+            required: true,
         };
         chai.request(server)
         .post('/api/Queries')
+        .set('auth', token)
         .send(Query)
         .end((err,response) =>{
-            response.should.have.status(401);
+            response.should.have.status(201);
            // response.text.should.be.a('Access denied!');
         done();
         });
@@ -33,12 +51,36 @@ describe('POST/api/Queries', ()=>{
         };
         chai.request(server)
         .post('/api/Queries')
-        .set('Authorization', 'eyJhbGciOiJIUzI1NiJ9.c2lib25peW9AZ21haWwuY29t.iVwTelManISmjRri7kjhYP7kT-4VUDTlLfid-lEsy9o')
+        .set('auth', token)
         .send(Query)
         .end((err,response) =>{
-            response.should.have.status(401);
+            response.should.have.status(404);
             //response.text.should.be.a('Access denied!');
         done();
         });
     });
 });
+   //Testing Get route
+describe('GET /api/Queries', () => {
+    it('it should get all the queries', (done) => {
+        chai.request(server)
+            .get("/api/queries")
+            .set('auth', token)
+            .end((err, response) => {
+                response.should.have.status(200);
+                //response.body.message.should.have.property('array');
+            done();
+        });
+    })
+    it('it should not get all the queries', (done) => {
+        chai.request(server)
+            .get('/api/quries')
+            .set('auth', token)
+            .end((err, response) => {
+                response.should.have.status(404);
+                 //response.text.should.be.a('route not found')
+            done();
+            });
+        });
+    });
+})

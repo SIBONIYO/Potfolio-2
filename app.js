@@ -1,6 +1,7 @@
 //Importing the package
 const express = require('express');
 const app = express();
+const expressValidator = require('express-validator')
 const mongoose = require('mongoose');
 require ('dotenv/config');
 const cors = require ('cors');
@@ -14,7 +15,8 @@ const queries = require('./Routes/Queries');
 //const swaggerJsDoc = require('swagger-jsdoc');
 //const swaggerOptions = require('swaggerJsDoc');
 //const swaggerDocs = swaggerJsDoc('swaggerOptions');
-
+const validatorOptions = {};
+//app.use(expressValidator(validatorOptions));
 
 require('./seeds/user')
 

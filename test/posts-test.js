@@ -9,7 +9,7 @@ chai.should();
 
 chai.use(chaiHttp);
 
-let token;
+let token
 let postId
 
 describe('Posts API', () => {
@@ -39,7 +39,7 @@ describe('Posts API', () => {
                     .end((err, response) => {
                         response.should.have.status(200);
                         // response.body.message.should.be('success');
-                        done();
+                    done();
                     });
             })
             it('it should not get all the posts', (done) => {
@@ -108,9 +108,40 @@ describe('Posts API', () => {
                         //response.text.should.be.a('Error found when trying to post');
                         done();
                     })
-            })
-        })
+            });
+        });
 
+        //Testing the comments endpoints
+        describe( 'POST/api/comment', ()=>{
+            it('it should post a new comment', (done)=>{
+            const comment ={
+                name: 'comment 1',
+                commentbody: 'wwe yeeeeeeeeeeeeeeeeee',
+                completed: false,
+            };
+            chai.request(server)
+            .post('/posts/:postId' + comment)
+            .send(comment)
+            .end((err,response) =>{
+                response.should.have.status(201);
+                response.body.message.should.be.eq('array');
+            done();
+            });
+        });
+        it('it should not post a comment', (done)=>{
+            const comment ={
+            completed: false,
+            };
+            chai.request(server)
+            .post('/posts/:postId' + comment)
+            .send(comment)
+            .end((err,response) =>{
+                response.should.have.status(404);
+                //response.body.message.should.have.property('file not found')
+            done();
+            });
+        });
+    });
         //Test the PATCH route
         describe('PATCH/api/posts/:postId', () => {
             it('it should patch an existing post', (done) => {
