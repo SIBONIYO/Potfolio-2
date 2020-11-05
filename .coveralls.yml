@@ -1,0 +1,6 @@
+repo_token: zN6mkoPGj2n3VJDBC0H9yErmAOwPNZw5a
+
+
+[![Coverage Status](https://coveralls.io/repos/github/SIBONIYO/Potfolio-2/badge.svg?branch=main)](https://coveralls.io/github/SIBONIYO/Potfolio-2?branch=main)
+
+gem 'coveralls', require: false

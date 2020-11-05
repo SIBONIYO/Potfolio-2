@@ -7,7 +7,8 @@
   },
   "scripts": {
     "start": "nodemon app.js",
-    "test": "nyc --reporter=html --reporter=text mocha test/*.js --timeout=50000 --exit"
+    "test": "nyc --reporter=html --reporter=text mocha test/*.js --timeout=50000 --exit",
+    "coverage": "npm run pretest && jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "author": "",
   "license": "ISC",
@@ -31,6 +32,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
+    "coveralls": "^3.1.0",
     "mocha": "^8.2.0",
     "nyc": "^15.1.0"
   },
