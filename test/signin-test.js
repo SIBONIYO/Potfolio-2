@@ -25,11 +25,26 @@ describe('POST/api/signin', ()=>{
         done();
         });
     });
-    it('it should not signin when user/password is not correct', (done)=>{
+    it('it should not signin when email is not correct', (done)=>{
         const user = {
             email: 'string',
             password: 'String',
-            required: true
+        }
+        chai.request(server)
+        .post('/api/signin')
+        .send(user)
+        .end((err,response) =>{
+            response.should.have.status(400);
+           // response.body.should.have.property('Object');
+           // response.body.message.token.should.have.property('array');
+            //response.text.should.be.a('username/password is not correct!');
+        done();
+        });
+    });
+    it('it should not signin when password is not correct', (done)=>{
+        const user = {
+            email: process.env.email,
+            password: 'String',
         }
         chai.request(server)
         .post('/api/signin')

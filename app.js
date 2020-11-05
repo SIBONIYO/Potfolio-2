@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 require ('dotenv/config');
 const cors = require ('cors');
 const postsRoute = require('./Routes/Posts');
-const commentsRoute = require('./Routes/comments');
+//const commentsRoute = require('./Routes/comments');
 const signin = require('./Routes/signin');
 const queries = require('./Routes/Queries');
 
@@ -29,9 +29,8 @@ app.use(cors());
 //app.use('/api-docs', swaggerUi.setup(swaggerDocs));
 
 
-app.use('/*', (req,res) =>{
-    
-    return res.status(404).json({message:'route not found'});
+app.use('/*', (req,res) =>{ 
+    return res.status(502).json({message:'Bad Gateway'});
 });
 
 //Connect to DB
@@ -43,6 +42,6 @@ mongoose.connect(
 
 //listen for request or how do we listen to the server
 app.listen(process.env.PORT || 3000, () => {
-    console.log("App started....")
+        console.log("App started....")
 });
 module.exports = app;

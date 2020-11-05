@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "nodemon app.js",
-    "test": "nyc --reporter=html --reporter=text mocha test/*.js --timeout=50000  "
+    "test": "nyc --reporter=html --reporter=text mocha test/*.js --timeout=50000 --exit"
   },
   "author": "",
   "license": "ISC",
