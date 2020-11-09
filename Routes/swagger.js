@@ -4,6 +4,7 @@ const swaggerUi = require('swagger-ui-express');
 
 // SWAGGER https://swagger.io/specification/
 const options = {
+    openapi = '3.0.0',
   definition: {
     info: {
       title: 'Post API',
@@ -11,7 +12,7 @@ const options = {
       contact: {
         name: 'Sibo my brand'
       },
-      servers: ('http://localhost:3000')
+      //server: ('http://localhost:3000')
     },
   },
     // ['.route/*.js']
@@ -21,7 +22,7 @@ const options = {
 };
 
 const specs = swaggerJsDoc(options);
-//app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 //SWAGGER ROUTES
 /** 
