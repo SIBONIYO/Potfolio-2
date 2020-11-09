@@ -6,27 +6,26 @@ const mongoose = require('mongoose');
 require ('dotenv/config');
 const cors = require ('cors');
 const postsRoute = require('./Routes/Posts');
-//const commentsRoute = require('./Routes/comments');
 const signin = require('./Routes/signin');
 const queries = require('./Routes/Queries');
 
 
-//const cors = require('cors');
-//const swaggerJsDoc = require('swagger-jsdoc');
+
+const swaggerJsDoc = require('swagger-jsdoc');
 //const swaggerOptions = require('swaggerJsDoc');
-//const swaggerDocs = swaggerJsDoc('swaggerOptions');
+const swaggerUi = require('swagger-Ui-express');
 const validatorOptions = {};
 //app.use(expressValidator(validatorOptions));
 
 require('./seeds/user')
-
+let specs;
 //middlewares
 app.use(express.json());
 app.use('/api/posts',postsRoute);
 app.use('/api/Queries', queries);
 app.use('/api/signin', signin);
 app.use(cors());
-//app.use('/api-docs', swaggerUi.setup(swaggerDocs));
+app.use('/api-docs',swaggerUi.serve, swaggerUi.setup(specs));
 
 
 app.use('/*', (req,res) =>{ 
