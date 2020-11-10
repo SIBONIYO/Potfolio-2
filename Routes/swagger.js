@@ -16,7 +16,7 @@ const options = {
     },
   },
     // ['.route/*.js']
-  apis: ('./Routes/swagger.js')
+  apis: ('./Routes/*.js')
   
 
 };

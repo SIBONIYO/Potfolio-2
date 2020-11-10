@@ -13,7 +13,7 @@ const queries = require('./Routes/Queries');
 
 const swaggerJsDoc = require('swagger-jsdoc');
 //const swaggerOptions = require('swaggerJsDoc');
-const swaggerUi = require('swagger-Ui-express');
+const swaggerUi = require('swagger-ui-express');
 const validatorOptions = {};
 //app.use(expressValidator(validatorOptions));
 
