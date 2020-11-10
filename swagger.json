@@ -49,7 +49,7 @@
         "parameters" : [ {
           "name" : "auth-token",
           "in" : "header",
-          "required" : true,
+          "required" : false,
           "type" : "string",
           "description" : ""
         } ],
