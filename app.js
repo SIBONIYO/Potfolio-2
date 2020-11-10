@@ -14,18 +14,18 @@ const queries = require('./Routes/Queries');
 const swaggerJsDoc = require('swagger-jsdoc');
 //const swaggerOptions = require('swaggerJsDoc');
 const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 const validatorOptions = {};
 //app.use(expressValidator(validatorOptions));
 
 require('./seeds/user')
-let specs;
 //middlewares
 app.use(express.json());
 app.use('/api/posts',postsRoute);
 app.use('/api/Queries', queries);
 app.use('/api/signin', signin);
 app.use(cors());
-app.use('/api-docs',swaggerUi.serve, swaggerUi.setup(specs));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 app.use('/*', (req,res) =>{ 

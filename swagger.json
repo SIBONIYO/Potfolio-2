@@ -1,0 +1,201 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.0",
+    "title" : "Sibo my brand",
+    "contact" : { }
+  },
+  "host" : "localhost:3000",
+  "basePath" : "/api",
+  "schemes" : [ "http" ],
+  "consumes" : [ "application/json" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/posts" : {
+      "post" : {
+        "summary" : "post article",
+        "tags" : [ "Misc" ],
+        "operationId" : "postarticle",
+        "deprecated" : false,
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "auth",
+          "in" : "header",
+          "required" : true,
+          "type" : "string",
+          "description" : ""
+        }, {
+          "name" : "Body",
+          "in" : "body",
+          "required" : true,
+          "description" : "",
+          "schema" : {
+            "$ref" : "#/definitions/postarticlerequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "headers" : { }
+          }
+        }
+      },
+      "get" : {
+        "summary" : "get all posts",
+        "tags" : [ "Misc" ],
+        "operationId" : "getallposts",
+        "deprecated" : false,
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "auth-token",
+          "in" : "header",
+          "required" : true,
+          "type" : "string",
+          "description" : ""
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "headers" : { }
+          }
+        }
+      },
+      "patch" : {
+        "summary" : "Post a comment",
+        "tags" : [ "Misc" ],
+        "operationId" : "Postacomment",
+        "deprecated" : false,
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "auth-token",
+          "in" : "header",
+          "required" : true,
+          "type" : "string",
+          "description" : ""
+        }, {
+          "name" : "Body",
+          "in" : "body",
+          "required" : true,
+          "description" : "",
+          "schema" : {
+            "$ref" : "#/definitions/PostacommentRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/posts/5f915792cf6c0e1394367247/comments" : {
+      "post" : {
+        "summary" : "Get one post",
+        "tags" : [ "Misc" ],
+        "operationId" : "Getonepost",
+        "deprecated" : false,
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "auth-token",
+          "in" : "header",
+          "required" : true,
+          "type" : "string",
+          "description" : ""
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/posts/5f96ebd1732c9823f41e2fcb" : {
+      "delete" : {
+        "summary" : "Delete a post",
+        "tags" : [ "Misc" ],
+        "operationId" : "Deleteapost",
+        "deprecated" : false,
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "auth-token",
+          "in" : "header",
+          "required" : true,
+          "type" : "string",
+          "description" : ""
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/" : {
+      "get" : {
+        "summary" : "Queries",
+        "tags" : [ "Misc" ],
+        "operationId" : "Queries",
+        "deprecated" : false,
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "headers" : { }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "postarticlerequest" : {
+      "title" : "postarticlerequest",
+      "example" : {
+        "title" : "This is my first post",
+        "description" : "This is my description of my lovely wife"
+      },
+      "type" : "object",
+      "properties" : {
+        "title" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        }
+      },
+      "required" : [ "title", "description" ]
+    },
+    "PostacommentRequest" : {
+      "title" : "PostacommentRequest",
+      "example" : {
+        "title" : "Le Rwanda",
+        "description" : "le Rwanda se situe dans la region des grand lacs",
+        "name" : "KAMALI",
+        "comment" : "we have got you man, eeeeehhhhhh"
+      },
+      "type" : "object",
+      "properties" : {
+        "title" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "comment" : {
+          "type" : "string"
+        }
+      },
+      "required" : [ "title", "description", "name", "comment" ]
+    }
+  },
+  "tags" : [ {
+    "name" : "Misc",
+    "description" : ""
+  } ]
+}
